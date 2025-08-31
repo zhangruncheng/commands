@@ -1,8 +1,8 @@
-# AI Prompt Optimization
+# AI Prompt Optimization # AI提示优化
 
-Optimize the following prompt for better AI model performance: $ARGUMENTS
+Optimize the following prompt for better AI model performance: $ARGUMENTS # 优化以下提示以获得更好的AI模型性能
 
-Analyze and improve the prompt by:
+Analyze and improve the prompt by: # 通过以下方式分析和改进提示：
 
 1. **Prompt Engineering**:
    - Apply chain-of-thought reasoning

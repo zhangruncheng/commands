@@ -1,11 +1,11 @@
-# Error Analysis and Resolution
+# Error Analysis and Resolution # 错误分析和解决
 
-Analyze and resolve errors in: $ARGUMENTS
+Analyze and resolve errors in: $ARGUMENTS # 分析并解决错误
 
-Perform comprehensive error analysis:
+Perform comprehensive error analysis: # 执行全面的错误分析：
 
-1. **Error Pattern Analysis**:
-   - Categorize error types
+1. **Error Pattern Analysis**: # 错误模式分析
+   - Categorize error types # 分类错误类型
    - Identify root causes
    - Trace error propagation
    - Analyze error frequency

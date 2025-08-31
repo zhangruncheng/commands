@@ -1,18 +1,18 @@
-# Deployment Checklist and Configuration
+# Deployment Checklist and Configuration # 部署清单和配置
 
-Generate deployment configuration and checklist for: $ARGUMENTS
+Generate deployment configuration and checklist for: $ARGUMENTS # 生成部署配置和清单
 
-Create comprehensive deployment artifacts:
+Create comprehensive deployment artifacts: # 创建全面的部署产物：
 
-1. **Pre-Deployment Checklist**:
-   - [ ] All tests passing
-   - [ ] Security scan completed
-   - [ ] Performance benchmarks met
-   - [ ] Documentation updated
-   - [ ] Database migrations tested
-   - [ ] Rollback plan documented
-   - [ ] Monitoring alerts configured
-   - [ ] Load testing completed
+1. **Pre-Deployment Checklist**: # 部署前清单
+   - [ ] All tests passing # 所有测试通过
+   - [ ] Security scan completed # 安全扫描完成
+   - [ ] Performance benchmarks met # 性能基准满足
+   - [ ] Documentation updated # 文档更新
+   - [ ] Database migrations tested # 数据库迁移测试
+   - [ ] Rollback plan documented # 回滚计划文档化
+   - [ ] Monitoring alerts configured # 监控警报配置
+   - [ ] Load testing completed # 负载测试完成
 
 2. **Infrastructure Configuration**:
    - Docker/containerization setup

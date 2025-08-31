@@ -1,12 +1,12 @@
-Save current project context for future agent coordination:
+Save current project context for future agent coordination: # 为未来的晿能体协调保存当前项目上下文：
 
-[Extended thinking: This tool uses the context-manager agent to capture and preserve project state, decisions, and patterns. This enables better continuity across sessions and improved agent coordination.]
+[Extended thinking: This tool uses the context-manager agent to capture and preserve project state, decisions, and patterns. This enables better continuity across sessions and improved agent coordination.] # [扩展思维：该工具使用上下文管理器晿能体来捕获和保存项目状态、决策和模式。这实现了更好的跨会话连续性和改善的晿能体协调。]
 
-## Context Capture Process
+## Context Capture Process # 上下文捕获流程
 
-Use Task tool with subagent_type="context-manager" to save comprehensive project context.
+Use Task tool with subagent_type="context-manager" to save comprehensive project context. # 使用任务工具，子晿能体类型为"context-manager"来保存全面的项目上下文。
 
-Prompt: "Save comprehensive project context for: $ARGUMENTS. Capture:
+Prompt: "Save comprehensive project context for: $ARGUMENTS. Capture: # 提示："为$ARGUMENTS保存全面的项目上下文。捕获：
 
 1. **Project Overview**
    - Project goals and objectives

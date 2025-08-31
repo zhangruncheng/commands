@@ -1,12 +1,12 @@
-Restore saved project context for agent coordination:
+Restore saved project context for agent coordination: # 为智能体协调恢复保存的项目上下文：
 
-[Extended thinking: This tool uses the context-manager agent to restore previously saved project context, enabling continuity across sessions and providing agents with comprehensive project knowledge.]
+[Extended thinking: This tool uses the context-manager agent to restore previously saved project context, enabling continuity across sessions and providing agents with comprehensive project knowledge.] # [扩展思维：该工具使用上下文管理器智能体来恢复之前保存的项目上下文，实现跨会话的连续性，并为智能体提供全面的项目知识。]
 
-## Context Restoration Process
+## Context Restoration Process # 上下文恢复流程
 
-Use Task tool with subagent_type="context-manager" to restore and apply saved context.
+Use Task tool with subagent_type="context-manager" to restore and apply saved context. # 使用任务工具，子晿能体类型为"context-manager"来恢复和应用保存的上下文。
 
-Prompt: "Restore project context for: $ARGUMENTS. Perform the following:
+Prompt: "Restore project context for: $ARGUMENTS. Perform the following: # 提示："为$ARGUMENTS恢复项目上下文。执行以下操作：
 
 1. **Locate Saved Context**
    - Find the most recent or specified context version

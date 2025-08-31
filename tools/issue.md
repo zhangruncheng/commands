@@ -1,11 +1,11 @@
-Please analyze and fix the GitHub issue: $ARGUMENTS.
+Please analyze and fix the GitHub issue: $ARGUMENTS. # 请分析并修复GitHub问题
 
-Follow these steps:
+Follow these steps: # 按照这些步骤：
 
-# PLAN
-1. Use 'gh issue view' to get the issue details
-2. Understand the problem described in the issue
-3. Ask clarifying questions if necessary
+# PLAN # 计划
+1. Use 'gh issue view' to get the issue details # 使用'gh issue view'获取问题详情
+2. Understand the problem described in the issue # 理解问题中描述的问题
+3. Ask clarifying questions if necessary # 如有必要，提出澄清问题
 4. Understand the prior art for this issue
 - Search the scratchpads for previous thoughts related to the issue
 - Search PRs to see if you can find history on this issue

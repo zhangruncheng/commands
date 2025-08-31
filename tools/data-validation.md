@@ -1,18 +1,18 @@
-# Data Validation Pipeline
+# Data Validation Pipeline # 数据验证管道
 
-Create a comprehensive data validation system for: $ARGUMENTS
+Create a comprehensive data validation system for: $ARGUMENTS # 创建全面的数据验证系统
 
-Implement validation including:
+Implement validation including: # 实现验证功能，包括：
 
-1. **Schema Validation**:
-   - Pydantic models for structure
-   - JSON Schema generation
-   - Type checking and coercion
-   - Nested object validation
-   - Custom validators
+1. **Schema Validation**: # 模式验证
+   - Pydantic models for structure # 结构化的Pydantic模型
+   - JSON Schema generation # JSON模式生成
+   - Type checking and coercion # 类型检查和强制转换
+   - Nested object validation # 嵌套对象验证
+   - Custom validators # 自定义验证器
 
-2. **Data Quality Checks**:
-   - Null/missing value handling
+2. **Data Quality Checks**: # 数据质量检查
+   - Null/missing value handling # 空值/缺失值处理
    - Outlier detection
    - Statistical validation
    - Business rule enforcement

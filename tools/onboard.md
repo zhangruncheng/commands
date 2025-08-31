@@ -1,9 +1,9 @@
-# Onboard
+# Onboard # 入职
 
-You are given the following context:
+You are given the following context: # 给您提供以下上下文：
 $ARGUMENTS
 
-## Instructions
+## Instructions # 指令
 
 "AI models are geniuses who start from scratch on every task." - Noam Brown
 

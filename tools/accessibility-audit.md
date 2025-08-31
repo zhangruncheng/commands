@@ -1,20 +1,20 @@
-# Accessibility Audit and Testing
+# Accessibility Audit and Testing # 可访问性审计和测试
 
-You are an accessibility expert specializing in WCAG compliance, inclusive design, and assistive technology compatibility. Conduct comprehensive audits, identify barriers, provide remediation guidance, and ensure digital products are accessible to all users.
+You are an accessibility expert specializing in WCAG compliance, inclusive design, and assistive technology compatibility. Conduct comprehensive audits, identify barriers, provide remediation guidance, and ensure digital products are accessible to all users. # 你是可访问性专家，专门从事WCAG合规性、包容性设计和辅助技术兼容性。进行全面审计，识别障碍，提供修复指导，确保数字产品对所有用户都可访问。
 
-## Context
-The user needs to audit and improve accessibility to ensure compliance with WCAG standards and provide an inclusive experience for users with disabilities. Focus on automated testing, manual verification, remediation strategies, and establishing ongoing accessibility practices.
+## Context # 上下文
+The user needs to audit and improve accessibility to ensure compliance with WCAG standards and provide an inclusive experience for users with disabilities. Focus on automated testing, manual verification, remediation strategies, and establishing ongoing accessibility practices. # 用户需要审计和改善可访问性，以确保符合WCAG标准并为残障用户提供包容性体验。专注于自动化测试、人工验证、修复策略和建立持续的可访问性实践。
 
-## Requirements
+## Requirements # 要求
 $ARGUMENTS
 
-## Instructions
+## Instructions # 说明 # 说明
 
-### 1. Automated Accessibility Testing
+### 1. Automated Accessibility Testing # 1. 自动化可访问性测试
 
-Implement comprehensive automated testing:
+Implement comprehensive automated testing: # 实施全面的自动化测试：
 
-**Accessibility Test Suite**
+**Accessibility Test Suite** # 可访问性测试套件
 ```javascript
 // accessibility-test-suite.js
 const { AxePuppeteer } = require('@axe-core/puppeteer');
@@ -24,39 +24,39 @@ const htmlValidator = require('html-validator');
 
 class AccessibilityAuditor {
     constructor(options = {}) {
-        this.wcagLevel = options.wcagLevel || 'AA';
-        this.viewport = options.viewport || { width: 1920, height: 1080 };
-        this.results = [];
+        this.wcagLevel = options.wcagLevel || 'AA'; // WCAG级别，默认AA
+        this.viewport = options.viewport || { width: 1920, height: 1080 }; // 视口大小
+        this.results = []; // 存储测试结果
     }
     
     async runFullAudit(url) {
-        console.log(`🔍 Starting accessibility audit for ${url}`);
+        console.log(`🔍 Starting accessibility audit for ${url}`); // 开始可访问性审计
         
         const results = {
             url,
-            timestamp: new Date().toISOString(),
-            summary: {},
-            violations: [],
-            passes: [],
-            incomplete: [],
-            inapplicable: []
+            timestamp: new Date().toISOString(), // 审计时间戳
+            summary: {}, // 摘要
+            violations: [], // 违规项
+            passes: [], // 通过项
+            incomplete: [], // 不完整项
+            inapplicable: [] // 不适用项
         };
         
-        // Run multiple testing tools
+        // Run multiple testing tools // 运行多个测试工具
         const [axeResults, pa11yResults, htmlResults] = await Promise.all([
             this.runAxeCore(url),
             this.runPa11y(url),
             this.validateHTML(url)
         ]);
         
-        // Combine results
+        // Combine results // 合并结果
         results.violations = this.mergeViolations([
             ...axeResults.violations,
             ...pa11yResults.violations
-        ]);
+        ]); // 合并违规项
         
-        results.htmlErrors = htmlResults.errors;
-        results.summary = this.generateSummary(results);
+        results.htmlErrors = htmlResults.errors; // HTML错误
+        results.summary = this.generateSummary(results); // 生成摘要
         
         return results;
     }
@@ -67,11 +67,11 @@ class AccessibilityAuditor {
         await page.setViewport(this.viewport);
         await page.goto(url, { waitUntil: 'networkidle2' });
         
-        // Configure axe
+        // Configure axe // 配置axe工具
         const axeBuilder = new AxePuppeteer(page)
-            .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
-            .disableRules(['color-contrast']) // Will test separately
-            .exclude('.no-a11y-check');
+            .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']) // WCAG标准
+            .disableRules(['color-contrast']) // Will test separately 颜色对比度将单独测试
+            .exclude('.no-a11y-check'); // 排除不需要检查的元素
         
         const results = await axeBuilder.analyze();
         await browser.close();
@@ -86,7 +86,7 @@ class AccessibilityAuditor {
             includeWarnings: true,
             viewport: this.viewport,
             actions: [
-                'wait for element .main-content to be visible'
+                'wait for element .main-content to be visible' // 等待主内容可见
             ]
         });
         
@@ -96,19 +96,19 @@ class AccessibilityAuditor {
     formatAxeResults(results) {
         return {
             violations: results.violations.map(violation => ({
-                id: violation.id,
-                impact: violation.impact,
-                description: violation.description,
-                help: violation.help,
-                helpUrl: violation.helpUrl,
+                id: violation.id, // 违规ID
+                impact: violation.impact, // 影响级别
+                description: violation.description, // 描述
+                help: violation.help, // 帮助信息
+                helpUrl: violation.helpUrl, // 帮助链接
                 nodes: violation.nodes.map(node => ({
-                    html: node.html,
-                    target: node.target,
-                    failureSummary: node.failureSummary
+                    html: node.html, // HTML元素
+                    target: node.target, // 目标选择器
+                    failureSummary: node.failureSummary // 失败总结
                 }))
             })),
-            passes: results.passes.length,
-            incomplete: results.incomplete.length
+            passes: results.passes.length, // 通过的测试数量
+            incomplete: results.incomplete.length // 不完整的测试数量
         };
     }
     
@@ -122,7 +122,7 @@ class AccessibilityAuditor {
         
         results.violations.forEach(violation => {
             if (violationsByImpact.hasOwnProperty(violation.impact)) {
-                violationsByImpact[violation.impact]++;
+                violationsByImpact[violation.impact]++; // 按影响级别统计违规数量
             }
         });
         
@@ -135,7 +135,7 @@ class AccessibilityAuditor {
     }
     
     calculateAccessibilityScore(results) {
-        // Simple scoring algorithm
+        // Simple scoring algorithm // 简单的评分算法
         const weights = {
             critical: 10,
             serious: 5,
@@ -148,31 +148,31 @@ class AccessibilityAuditor {
             totalWeight += weights[violation.impact] || 0;
         });
         
-        // Score from 0-100
+        // Score from 0-100 // 分数范围0-100
         return Math.max(0, 100 - totalWeight);
     }
 }
 
-// Component-level testing
+// Component-level testing // 组件级测试
 import { render } from '@testing-library/react';
 import { axe, toHaveNoViolations } from 'jest-axe';
 
 expect.extend(toHaveNoViolations);
 
 describe('Accessibility Tests', () => {
-    it('should have no accessibility violations', async () => {
+    it('should have no accessibility violations', async () => { // 应该没有可访问性违规
         const { container } = render(<MyComponent />);
         const results = await axe(container);
         expect(results).toHaveNoViolations();
     });
     
-    it('should have proper ARIA labels', async () => {
+    it('should have proper ARIA labels', async () => { // 应该有适当的ARIA标签
         const { container } = render(<Form />);
         const results = await axe(container, {
             rules: {
-                'label': { enabled: true },
-                'aria-valid-attr': { enabled: true },
-                'aria-roles': { enabled: true }
+                'label': { enabled: true }, // 标签规则
+                'aria-valid-attr': { enabled: true }, // ARIA属性有效性
+                'aria-roles': { enabled: true } // ARIA角色
             }
         });
         expect(results).toHaveNoViolations();
@@ -180,45 +180,45 @@ describe('Accessibility Tests', () => {
 });
 ```
 
-### 2. Color Contrast Analysis
+### 2. Color Contrast Analysis # 2. 颜色对比度分析
 
-Implement comprehensive color contrast testing:
+Implement comprehensive color contrast testing: # 实施全面的颜色对比度测试：
 
-**Color Contrast Checker**
+**Color Contrast Checker** # 颜色对比度检查器
 ```javascript
 // color-contrast-analyzer.js
 class ColorContrastAnalyzer {
     constructor() {
         this.wcagLevels = {
-            'AA': { normal: 4.5, large: 3 },
-            'AAA': { normal: 7, large: 4.5 }
+            'AA': { normal: 4.5, large: 3 }, // WCAG AA级别对比度要求
+            'AAA': { normal: 7, large: 4.5 } // WCAG AAA级别对比度要求
         };
     }
     
     async analyzePageContrast(page) {
         const contrastIssues = [];
         
-        // Extract all text elements with their styles
+        // Extract all text elements with their styles // 提取所有文本元素及其样式
         const elements = await page.evaluate(() => {
             const allElements = document.querySelectorAll('*');
             const textElements = [];
             
             allElements.forEach(el => {
-                if (el.innerText && el.innerText.trim()) {
-                    const styles = window.getComputedStyle(el);
-                    const rect = el.getBoundingClientRect();
+                if (el.innerText && el.innerText.trim()) { // 有文本内容的元素
+                    const styles = window.getComputedStyle(el); // 获取计算样式
+                    const rect = el.getBoundingClientRect(); // 获取元素位置
                     
                     textElements.push({
-                        text: el.innerText.trim(),
+                        text: el.innerText.trim(), // 文本内容
                         selector: el.tagName.toLowerCase() + 
                                  (el.id ? `#${el.id}` : '') +
-                                 (el.className ? `.${el.className.split(' ').join('.')}` : ''),
-                        color: styles.color,
-                        backgroundColor: styles.backgroundColor,
-                        fontSize: parseFloat(styles.fontSize),
-                        fontWeight: styles.fontWeight,
-                        position: { x: rect.x, y: rect.y },
-                        isVisible: rect.width > 0 && rect.height > 0
+                                 (el.className ? `.${el.className.split(' ').join('.')}` : ''), // 元素选择器
+                        color: styles.color, // 文本颜色
+                        backgroundColor: styles.backgroundColor, // 背景颜色
+                        fontSize: parseFloat(styles.fontSize), // 字体大小
+                        fontWeight: styles.fontWeight, // 字体粗细
+                        position: { x: rect.x, y: rect.y }, // 元素位置
+                        isVisible: rect.width > 0 && rect.height > 0 // 是否可见
                     });
                 }
             });
@@ -226,7 +226,7 @@ class ColorContrastAnalyzer {
             return textElements;
         });
         
-        // Check contrast for each element
+        // Check contrast for each element // 检查每个元素的对比度
         for (const element of elements) {
             if (!element.isVisible) continue;
             
@@ -238,25 +238,25 @@ class ColorContrastAnalyzer {
             const isLargeText = this.isLargeText(
                 element.fontSize,
                 element.fontWeight
-            );
+            ); // 判断是否为大字体
             
             const requiredContrast = isLargeText ? 
                 this.wcagLevels.AA.large : 
-                this.wcagLevels.AA.normal;
+                this.wcagLevels.AA.normal; // 所需对比度
             
             if (contrast < requiredContrast) {
                 contrastIssues.push({
-                    selector: element.selector,
-                    text: element.text.substring(0, 50) + '...',
-                    currentContrast: contrast.toFixed(2),
-                    requiredContrast,
-                    foreground: element.color,
-                    background: element.backgroundColor,
+                    selector: element.selector, // 元素选择器
+                    text: element.text.substring(0, 50) + '...', // 文本预览
+                    currentContrast: contrast.toFixed(2), // 当前对比度
+                    requiredContrast, // 所需对比度
+                    foreground: element.color, // 前景色
+                    background: element.backgroundColor, // 背景色
                     recommendation: this.generateColorRecommendation(
                         element.color,
                         element.backgroundColor,
                         requiredContrast
-                    )
+                    ) // 改进建议
                 });
             }
         }
@@ -279,20 +279,20 @@ class ColorContrastAnalyzer {
     
     relativeLuminance(rgb) {
         const [r, g, b] = rgb.map(val => {
-            val = val / 255;
+            val = val / 255; // 归一化到0-1
             return val <= 0.03928 ? 
                 val / 12.92 : 
-                Math.pow((val + 0.055) / 1.055, 2.4);
+                Math.pow((val + 0.055) / 1.055, 2.4); // 伽马校正
         });
         
-        return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+        return 0.2126 * r + 0.7152 * g + 0.0722 * b; // 计算相对亮度
     }
     
     generateColorRecommendation(foreground, background, targetRatio) {
-        // Suggest adjusted colors that meet contrast requirements
+        // Suggest adjusted colors that meet contrast requirements // 建议满足对比度要求的调整颜色
         const suggestions = [];
         
-        // Try darkening foreground
+        // Try darkening foreground // 尝试加深前景色
         const darkerFg = this.adjustColorForContrast(
             foreground,
             background,
@@ -307,7 +307,7 @@ class ColorContrastAnalyzer {
             });
         }
         
-        // Try lightening background
+        // Try lightening background // 尝试减淡背景色
         const lighterBg = this.adjustColorForContrast(
             background,
             foreground,
@@ -326,15 +326,15 @@ class ColorContrastAnalyzer {
     }
 }
 
-// CSS for high contrast mode
+// CSS for high contrast mode // 高对比度模式的CSS
 const highContrastStyles = `
-@media (prefers-contrast: high) {
+@media (prefers-contrast: high) { /* 高对比度模式 */
     :root {
-        --text-primary: #000;
-        --text-secondary: #333;
-        --bg-primary: #fff;
-        --bg-secondary: #f0f0f0;
-        --border-color: #000;
+        --text-primary: #000; /* 主文本颜色 */
+        --text-secondary: #333; /* 次要文本颜色 */
+        --bg-primary: #fff; /* 主背景颜色 */
+        --bg-secondary: #f0f0f0; /* 次要背景颜色 */
+        --border-color: #000; /* 边框颜色 */
     }
     
     * {
@@ -351,67 +351,67 @@ const highContrastStyles = `
     }
 }
 
-@media (prefers-color-scheme: dark) and (prefers-contrast: high) {
+@media (prefers-color-scheme: dark) and (prefers-contrast: high) { /* 深色高对比度模式 */
     :root {
-        --text-primary: #fff;
-        --text-secondary: #ccc;
-        --bg-primary: #000;
-        --bg-secondary: #1a1a1a;
-        --border-color: #fff;
+        --text-primary: #fff; /* 主文本颜色 */
+        --text-secondary: #ccc; /* 次要文本颜色 */
+        --bg-primary: #000; /* 主背景颜色 */
+        --bg-secondary: #1a1a1a; /* 次要背景颜色 */
+        --border-color: #fff; /* 边框颜色 */
     }
 }
 `;
 ```
 
-### 3. Keyboard Navigation Testing
+### 3. Keyboard Navigation Testing # 3. 键盘导航测试
 
-Test keyboard accessibility:
+Test keyboard accessibility: # 测试键盘可访问性：
 
-**Keyboard Navigation Tester**
+**Keyboard Navigation Tester** # 键盘导航测试器
 ```javascript
 // keyboard-navigation-test.js
 class KeyboardNavigationTester {
     async testKeyboardNavigation(page) {
         const results = {
-            focusableElements: [],
-            tabOrder: [],
-            keyboardTraps: [],
-            missingFocusIndicators: [],
-            inaccessibleInteractive: []
+            focusableElements: [], // 可聚焦元素
+            tabOrder: [], // Tab顺序
+            keyboardTraps: [], // 键盘陷阱
+            missingFocusIndicators: [], // 缺少焦点指示器
+            inaccessibleInteractive: [] // 不可键盘访问的交互元素
         };
         
-        // Get all focusable elements
+        // Get all focusable elements // 获取所有可聚焦元素
         const focusableElements = await page.evaluate(() => {
             const selector = 'a[href], button, input, select, textarea, [tabindex]:not([tabindex="-1"])';
             const elements = document.querySelectorAll(selector);
             
             return Array.from(elements).map((el, index) => ({
-                tagName: el.tagName.toLowerCase(),
-                type: el.type || null,
-                text: el.innerText || el.value || el.placeholder || '',
-                tabIndex: el.tabIndex,
-                hasAriaLabel: !!el.getAttribute('aria-label'),
-                hasAriaLabelledBy: !!el.getAttribute('aria-labelledby'),
+                tagName: el.tagName.toLowerCase(), // 标签名
+                type: el.type || null, // 输入类型
+                text: el.innerText || el.value || el.placeholder || '', // 文本内容
+                tabIndex: el.tabIndex, // Tab索引
+                hasAriaLabel: !!el.getAttribute('aria-label'), // 是否有ARIA标签
+                hasAriaLabelledBy: !!el.getAttribute('aria-labelledby'), // 是否有ARIA引用标签
                 selector: el.tagName.toLowerCase() + 
                          (el.id ? `#${el.id}` : '') +
-                         (el.className ? `.${el.className.split(' ').join('.')}` : '')
+                         (el.className ? `.${el.className.split(' ').join('.')}` : '') // 选择器
             }));
         });
         
         results.focusableElements = focusableElements;
         
-        // Test tab order
+        // Test tab order // 测试Tab顺序
         for (let i = 0; i < focusableElements.length; i++) {
             await page.keyboard.press('Tab');
             
             const focusedElement = await page.evaluate(() => {
-                const el = document.activeElement;
+                const el = document.activeElement; // 当前聚焦元素
                 return {
-                    tagName: el.tagName.toLowerCase(),
+                    tagName: el.tagName.toLowerCase(), // 标签名
                     selector: el.tagName.toLowerCase() + 
                              (el.id ? `#${el.id}` : '') +
-                             (el.className ? `.${el.className.split(' ').join('.')}` : ''),
-                    hasFocusIndicator: window.getComputedStyle(el).outline !== 'none'
+                             (el.className ? `.${el.className.split(' ').join('.')}` : ''), // 选择器
+                    hasFocusIndicator: window.getComputedStyle(el).outline !== 'none' // 是否有焦点指示器
                 };
             });
             
@@ -422,17 +422,17 @@ class KeyboardNavigationTester {
             }
         }
         
-        // Test for keyboard traps
+        // Test for keyboard traps // 测试键盘陷阱
         await this.detectKeyboardTraps(page, results);
         
-        // Test interactive elements
+        // Test interactive elements // 测试交互元素
         await this.testInteractiveElements(page, results);
         
         return results;
     }
     
     async detectKeyboardTraps(page, results) {
-        // Test common trap patterns
+        // Test common trap patterns // 测试常见陷阱模式
         const trapSelectors = [
             'div[role="dialog"]',
             '.modal',
@@ -444,11 +444,11 @@ class KeyboardNavigationTester {
             const elements = await page.$$(selector);
             
             for (const element of elements) {
-                const canEscape = await this.testEscapeability(page, element);
+                const canEscape = await this.testEscapeability(page, element); // 测试是否可以逃脱
                 if (!canEscape) {
                     results.keyboardTraps.push({
                         selector,
-                        issue: 'Cannot escape with keyboard'
+                        issue: 'Cannot escape with keyboard' // 无法用键盘逃脱
                     });
                 }
             }
@@ -456,7 +456,7 @@ class KeyboardNavigationTester {
     }
     
     async testInteractiveElements(page, results) {
-        // Find elements with click handlers but no keyboard support
+        // Find elements with click handlers but no keyboard support // 查找有点击处理但无键盘支持的元素
         const clickableElements = await page.evaluate(() => {
             const elements = document.querySelectorAll('*');
             const clickable = [];
@@ -466,25 +466,25 @@ class KeyboardNavigationTester {
                     el.onclick || 
                     el.getAttribute('onclick') ||
                     (window.getEventListeners && 
-                     window.getEventListeners(el).click);
+                     window.getEventListeners(el).click); // 是否有点击处理器
                 
                 const isNotNativelyClickable = 
                     !['a', 'button', 'input', 'select', 'textarea'].includes(
                         el.tagName.toLowerCase()
-                    );
+                    ); // 不是原生可点击元素
                 
                 if (hasClickHandler && isNotNativelyClickable) {
                     const hasKeyboardSupport = 
                         el.getAttribute('tabindex') !== null ||
                         el.getAttribute('role') === 'button' ||
                         el.onkeydown || 
-                        el.onkeyup;
+                        el.onkeyup; // 是否有键盘支持
                     
                     if (!hasKeyboardSupport) {
                         clickable.push({
                             selector: el.tagName.toLowerCase() + 
                                      (el.id ? `#${el.id}` : ''),
-                            issue: 'Click handler without keyboard support'
+                            issue: 'Click handler without keyboard support' // 有点击处理但无键盘支持
                         });
                     }
                 }
@@ -497,18 +497,18 @@ class KeyboardNavigationTester {
     }
 }
 
-// Keyboard navigation enhancement
+// Keyboard navigation enhancement // 键盘导航增强
 function enhanceKeyboardNavigation() {
-    // Skip to main content link
+    // Skip to main content link // 跳转到主内容链接
     const skipLink = document.createElement('a');
     skipLink.href = '#main-content';
     skipLink.className = 'skip-link';
     skipLink.textContent = 'Skip to main content';
     document.body.insertBefore(skipLink, document.body.firstChild);
     
-    // Add keyboard event handlers
+    // Add keyboard event handlers // 添加键盘事件处理器
     document.addEventListener('keydown', (e) => {
-        // Escape key closes modals
+        // Escape key closes modals // Escape键关闭模态框
         if (e.key === 'Escape') {
             const modal = document.querySelector('.modal.open');
             if (modal) {
@@ -516,7 +516,7 @@ function enhanceKeyboardNavigation() {
             }
         }
         
-        // Arrow key navigation for menus
+        // Arrow key navigation for menus // 菜单的箭头键导航
         if (e.key.startsWith('Arrow')) {
             const menu = document.activeElement.closest('[role="menu"]');
             if (menu) {
@@ -526,15 +526,15 @@ function enhanceKeyboardNavigation() {
         }
     });
     
-    // Ensure all interactive elements are keyboard accessible
+    // Ensure all interactive elements are keyboard accessible // 确保所有交互元素都可键盘访问
     document.querySelectorAll('[onclick]').forEach(el => {
         if (!el.hasAttribute('tabindex') && 
-            !['a', 'button', 'input'].includes(el.tagName.toLowerCase())) {
-            el.setAttribute('tabindex', '0');
-            el.setAttribute('role', 'button');
+            !['a', 'button', 'input'].includes(el.tagName.toLowerCase())) { // 如果不是原生可聚焦元素
+            el.setAttribute('tabindex', '0'); // 设置可聚焦
+            el.setAttribute('role', 'button'); // 设置角色为按钮
             
             el.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
+                if (e.key === 'Enter' || e.key === ' ') { // 支持Enter和空格键激活
                     el.click();
                     e.preventDefault();
                 }
@@ -544,23 +544,23 @@ function enhanceKeyboardNavigation() {
 }
 ```
 
-### 4. Screen Reader Testing
+### 4. Screen Reader Testing # 4. 屏幕阅读器测试
 
-Implement screen reader compatibility testing:
+Implement screen reader compatibility testing: # 实施屏幕阅读器兼容性测试：
 
-**Screen Reader Test Suite**
+**Screen Reader Test Suite** # 屏幕阅读器测试套件
 ```javascript
 // screen-reader-test.js
 class ScreenReaderTester {
     async testScreenReaderCompatibility(page) {
         const results = {
-            landmarks: await this.testLandmarks(page),
-            headings: await this.testHeadingStructure(page),
-            images: await this.testImageAccessibility(page),
-            forms: await this.testFormAccessibility(page),
-            tables: await this.testTableAccessibility(page),
-            liveRegions: await this.testLiveRegions(page),
-            semantics: await this.testSemanticHTML(page)
+            landmarks: await this.testLandmarks(page), // 地标测试
+            headings: await this.testHeadingStructure(page), // 标题结构测试
+            images: await this.testImageAccessibility(page), // 图像可访问性测试
+            forms: await this.testFormAccessibility(page), // 表单可访问性测试
+            tables: await this.testTableAccessibility(page), // 表格可访问性测试
+            liveRegions: await this.testLiveRegions(page), // 动态区域测试
+            semantics: await this.testSemanticHTML(page) // 语义HTML测试
         };
         
         return results;
@@ -575,20 +575,20 @@ class ScreenReaderTester {
             
             const found = [];
             
-            // Check ARIA landmarks
+            // Check ARIA landmarks // 检查ARIA地标
             landmarkRoles.forEach(role => {
                 const elements = document.querySelectorAll(`[role="${role}"]`);
                 elements.forEach(el => {
                     found.push({
-                        type: role,
+                        type: role, // 地标类型
                         hasLabel: !!(el.getAttribute('aria-label') || 
-                                   el.getAttribute('aria-labelledby')),
-                        selector: this.getSelector(el)
+                                   el.getAttribute('aria-labelledby')), // 是否有标签
+                        selector: this.getSelector(el) // 选择器
                     });
                 });
             });
             
-            // Check HTML5 landmarks
+            // Check HTML5 landmarks // 检查HTML5地标
             const html5Landmarks = {
                 'header': 'banner',
                 'nav': 'navigation',
@@ -600,12 +600,12 @@ class ScreenReaderTester {
             Object.entries(html5Landmarks).forEach(([tag, role]) => {
                 const elements = document.querySelectorAll(tag);
                 elements.forEach(el => {
-                    if (!el.closest('[role]')) {
+                    if (!el.closest('[role]')) { // 如果没有父级角色
                         found.push({
-                            type: role,
+                            type: role, // 地标类型
                             hasLabel: !!(el.getAttribute('aria-label') || 
-                                       el.getAttribute('aria-labelledby')),
-                            selector: tag
+                                       el.getAttribute('aria-labelledby')), // 是否有标签
+                            selector: tag // 选择器
                         });
                     }
                 });
@@ -615,8 +615,8 @@ class ScreenReaderTester {
         });
         
         return {
-            landmarks,
-            issues: this.analyzeLandmarkIssues(landmarks)
+            landmarks, // 地标列表
+            issues: this.analyzeLandmarkIssues(landmarks) // 地标问题分析
         };
     }
     
@@ -627,22 +627,22 @@ class ScreenReaderTester {
             
             allHeadings.forEach(heading => {
                 structure.push({
-                    level: parseInt(heading.tagName[1]),
-                    text: heading.textContent.trim(),
-                    hasAriaLevel: !!heading.getAttribute('aria-level'),
-                    isEmpty: !heading.textContent.trim()
+                    level: parseInt(heading.tagName[1]), // 标题级别
+                    text: heading.textContent.trim(), // 标题文本
+                    hasAriaLevel: !!heading.getAttribute('aria-level'), // 是否有ARIA级别
+                    isEmpty: !heading.textContent.trim() // 是否为空
                 });
             });
             
             return structure;
         });
         
-        // Analyze heading structure
+        // Analyze heading structure // 分析标题结构
         const issues = [];
         let previousLevel = 0;
         
         headings.forEach((heading, index) => {
-            // Check for skipped levels
+            // Check for skipped levels // 检查跳级
             if (heading.level > previousLevel + 1 && previousLevel !== 0) {
                 issues.push({
                     type: 'skipped-level',
@@ -651,7 +651,7 @@ class ScreenReaderTester {
                 });
             }
             
-            // Check for empty headings
+            // Check for empty headings // 检查空标题
             if (heading.isEmpty) {
                 issues.push({
                     type: 'empty-heading',
@@ -663,7 +663,7 @@ class ScreenReaderTester {
             previousLevel = heading.level;
         });
         
-        // Check for missing h1
+        // Check for missing h1 // 检查缺少h1
         if (!headings.some(h => h.level === 1)) {
             issues.push({
                 type: 'missing-h1',
@@ -671,7 +671,7 @@ class ScreenReaderTester {
             });
         }
         
-        return { headings, issues };
+        return { headings, issues }; // 返回标题和问题
     }
     
     async testFormAccessibility(page) {
@@ -689,23 +689,23 @@ class ScreenReaderTester {
                 
                 inputs.forEach(input => {
                     const field = {
-                        type: input.type || input.tagName.toLowerCase(),
-                        name: input.name,
-                        id: input.id,
-                        hasLabel: false,
-                        hasAriaLabel: !!input.getAttribute('aria-label'),
-                        hasAriaDescribedBy: !!input.getAttribute('aria-describedby'),
-                        hasPlaceholder: !!input.placeholder,
-                        required: input.required,
-                        hasErrorMessage: false
+                        type: input.type || input.tagName.toLowerCase(), // 字段类型
+                        name: input.name, // 字段名称
+                        id: input.id, // 字段ID
+                        hasLabel: false, // 是否有标签
+                        hasAriaLabel: !!input.getAttribute('aria-label'), // 是否有ARIA标签
+                        hasAriaDescribedBy: !!input.getAttribute('aria-describedby'), // 是否有ARIA描述
+                        hasPlaceholder: !!input.placeholder, // 是否有占位符
+                        required: input.required, // 是否必填
+                        hasErrorMessage: false // 是否有错误消息
                     };
                     
-                    // Check for associated label
+                    // Check for associated label // 检查关联标签
                     if (input.id) {
                         field.hasLabel = !!document.querySelector(`label[for="${input.id}"]`);
                     }
                     
-                    // Check if wrapped in label
+                    // Check if wrapped in label // 检查是否被标签包裹
                     if (!field.hasLabel) {
                         field.hasLabel = !!input.closest('label');
                     }
@@ -719,37 +719,37 @@ class ScreenReaderTester {
             return results;
         });
         
-        // Analyze form accessibility
+        // Analyze form accessibility // 分析表单可访问性
         const issues = [];
         forms.forEach((form, formIndex) => {
             form.fields.forEach((field, fieldIndex) => {
-                if (!field.hasLabel && !field.hasAriaLabel) {
+                if (!field.hasLabel && !field.hasAriaLabel) { // 缺少标签
                     issues.push({
-                        type: 'missing-label',
-                        form: formIndex,
-                        field: fieldIndex,
-                        fieldType: field.type
+                        type: 'missing-label', // 问题类型：缺少标签
+                        form: formIndex, // 表单索引
+                        field: fieldIndex, // 字段索引
+                        fieldType: field.type // 字段类型
                     });
                 }
                 
-                if (field.required && !field.hasErrorMessage) {
+                if (field.required && !field.hasErrorMessage) { // 必填但没有错误消息
                     issues.push({
-                        type: 'missing-error-message',
-                        form: formIndex,
-                        field: fieldIndex,
-                        fieldType: field.type
+                        type: 'missing-error-message', // 问题类型：缺少错误消息
+                        form: formIndex, // 表单索引
+                        field: fieldIndex, // 字段索引
+                        fieldType: field.type // 字段类型
                     });
                 }
             });
         });
         
-        return { forms, issues };
+        return { forms, issues }; // 返回表单和问题
     }
 }
 
-// ARIA implementation patterns
+// ARIA implementation patterns // ARIA实现模式
 const ariaPatterns = {
-    // Accessible modal
+    // Accessible modal // 可访问的模态框
     modal: `
 <div role="dialog" 
      aria-labelledby="modal-title" 
@@ -761,7 +761,7 @@ const ariaPatterns = {
 </div>
     `,
     
-    // Accessible tabs
+    // Accessible tabs // 可访问的标签页
     tabs: `
 <div role="tablist" aria-label="Section navigation">
     <button role="tab" 
@@ -784,7 +784,7 @@ const ariaPatterns = {
 </div>
     `,
     
-    // Accessible form
+    // Accessible form // 可访问的表单
     form: `
 <form>
     <fieldset>
@@ -808,88 +808,88 @@ const ariaPatterns = {
 };
 ```
 
-### 5. Manual Testing Checklist
+### 5. Manual Testing Checklist # 5. 手工测试清单
 
-Create comprehensive manual testing guides:
+Create comprehensive manual testing guides: # 创建全面的手工测试指南：
 
-**Manual Accessibility Checklist**
+**Manual Accessibility Checklist** # 手工可访问性检查清单
 ```markdown
-## Manual Accessibility Testing Checklist
+## Manual Accessibility Testing Checklist ## 手工可访问性测试清单
 
-### 1. Keyboard Navigation
-- [ ] Can access all interactive elements using Tab key
-- [ ] Can activate buttons with Enter/Space
-- [ ] Can navigate dropdowns with arrow keys
-- [ ] Can escape modals with Esc key
-- [ ] Focus indicator is always visible
-- [ ] No keyboard traps exist
-- [ ] Skip links work correctly
-- [ ] Tab order is logical
+### 1. Keyboard Navigation ### 1. 键盘导航
+- [ ] Can access all interactive elements using Tab key # 可以使用Tab键访问所有交互元素
+- [ ] Can activate buttons with Enter/Space # 可以用Enter/空格键激活按钮
+- [ ] Can navigate dropdowns with arrow keys # 可以用箭头键导航下拉菜单
+- [ ] Can escape modals with Esc key # 可以用Esc键关闭模态框
+- [ ] Focus indicator is always visible # 焦点指示器始终可见
+- [ ] No keyboard traps exist # 不存在键盘陷阱
+- [ ] Skip links work correctly # 跳转链接正常工作
+- [ ] Tab order is logical # Tab顺序合理
 
-### 2. Screen Reader Testing
-- [ ] Page title is descriptive
-- [ ] Headings create logical outline
-- [ ] All images have appropriate alt text
-- [ ] Form fields have labels
-- [ ] Error messages are announced
-- [ ] Dynamic content updates are announced
-- [ ] Tables have proper headers
-- [ ] Lists use semantic markup
+### 2. Screen Reader Testing ### 2. 屏幕阅读器测试
+- [ ] Page title is descriptive # 页面标题具有描述性
+- [ ] Headings create logical outline # 标题创建逻辑大纲
+- [ ] All images have appropriate alt text # 所有图像都有适当的替代文本
+- [ ] Form fields have labels # 表单字段有标签
+- [ ] Error messages are announced # 错误消息被播报
+- [ ] Dynamic content updates are announced # 动态内容更新被播报
+- [ ] Tables have proper headers # 表格有适当的表头
+- [ ] Lists use semantic markup # 列表使用语义标记
 
-### 3. Visual Testing
-- [ ] Text can be resized to 200% without loss of functionality
-- [ ] Color is not the only means of conveying information
-- [ ] Focus indicators have sufficient contrast
-- [ ] Content reflows at 320px width
-- [ ] No horizontal scrolling at 320px
-- [ ] Animations can be paused/stopped
-- [ ] No content flashes more than 3 times per second
+### 3. Visual Testing ### 3. 视觉测试
+- [ ] Text can be resized to 200% without loss of functionality # 文本可以放大到200%而不失去功能
+- [ ] Color is not the only means of conveying information # 颜色不是传达信息的唯一手段
+- [ ] Focus indicators have sufficient contrast # 焦点指示器有足够的对比度
+- [ ] Content reflows at 320px width # 内容在320px宽度下重排
+- [ ] No horizontal scrolling at 320px # 320px宽度下无水平滚动
+- [ ] Animations can be paused/stopped # 动画可以暂停/停止
+- [ ] No content flashes more than 3 times per second # 内容闪烁不超过每秒3次
 
-### 4. Cognitive Accessibility
-- [ ] Instructions are clear and simple
-- [ ] Error messages are helpful
-- [ ] Forms can be completed without time limits
-- [ ] Content is organized logically
-- [ ] Navigation is consistent
-- [ ] Important actions are reversible
-- [ ] Help is available when needed
+### 4. Cognitive Accessibility ### 4. 认知可访问性
+- [ ] Instructions are clear and simple # 说明清晰简单
+- [ ] Error messages are helpful # 错误消息有帮助
+- [ ] Forms can be completed without time limits # 表单可以无时间限制完成
+- [ ] Content is organized logically # 内容组织逻辑清楚
+- [ ] Navigation is consistent # 导航一致
+- [ ] Important actions are reversible # 重要操作可以撤销
+- [ ] Help is available when needed # 需要时有帮助可用
 
-### 5. Mobile Accessibility
-- [ ] Touch targets are at least 44x44 pixels
-- [ ] Gestures have alternatives
-- [ ] Device orientation works in both modes
-- [ ] Virtual keyboard doesn't obscure inputs
-- [ ] Pinch zoom is not disabled
+### 5. Mobile Accessibility ### 5. 移动端可访问性
+- [ ] Touch targets are at least 44x44 pixels # 触摸目标至少为44x44像素
+- [ ] Gestures have alternatives # 手势有替代方案
+- [ ] Device orientation works in both modes # 设备方向在两种模式下都工作
+- [ ] Virtual keyboard doesn't obscure inputs # 虚拟键盘不会遮挡输入框
+- [ ] Pinch zoom is not disabled # 捏合缩放未被禁用
 ```
 
-### 6. Remediation Strategies
+### 6. Remediation Strategies # 6. 修复策略
 
-Provide fixes for common issues:
+Provide fixes for common issues: # 为常见问题提供修复：
 
-**Accessibility Fixes**
+**Accessibility Fixes** # 可访问性修复
 ```javascript
 // accessibility-fixes.js
 class AccessibilityRemediator {
     applyFixes(violations) {
         violations.forEach(violation => {
             switch(violation.id) {
-                case 'image-alt':
+                case 'image-alt': // 图像替代文本
                     this.fixMissingAltText(violation.nodes);
                     break;
-                case 'label':
+                case 'label': // 标签
                     this.fixMissingLabels(violation.nodes);
                     break;
-                case 'color-contrast':
+                case 'color-contrast': // 颜色对比度
                     this.fixColorContrast(violation.nodes);
                     break;
-                case 'heading-order':
+                case 'heading-order': // 标题顺序
                     this.fixHeadingOrder(violation.nodes);
                     break;
-                case 'landmark-one-main':
+                case 'landmark-one-main': // 主地标
                     this.fixLandmarks(violation.nodes);
                     break;
                 default:
-                    console.warn(`No automatic fix for: ${violation.id}`);
+                    console.warn(`No automatic fix for: ${violation.id}`); // 无自动修复
             }
         });
     }
@@ -898,12 +898,12 @@ class AccessibilityRemediator {
         nodes.forEach(node => {
             const element = document.querySelector(node.target[0]);
             if (element && element.tagName === 'IMG') {
-                // Decorative image
+                // Decorative image // 装饰性图像
                 if (this.isDecorativeImage(element)) {
                     element.setAttribute('alt', '');
                     element.setAttribute('role', 'presentation');
                 } else {
-                    // Generate meaningful alt text
+                    // Generate meaningful alt text // 生成有意义的替代文本
                     const altText = this.generateAltText(element);
                     element.setAttribute('alt', altText);
                 }
@@ -915,7 +915,7 @@ class AccessibilityRemediator {
         nodes.forEach(node => {
             const element = document.querySelector(node.target[0]);
             if (element && ['INPUT', 'SELECT', 'TEXTAREA'].includes(element.tagName)) {
-                // Try to find nearby text
+                // Try to find nearby text // 尝试查找附近的文本
                 const nearbyText = this.findNearbyLabelText(element);
                 if (nearbyText) {
                     const label = document.createElement('label');
@@ -924,7 +924,7 @@ class AccessibilityRemediator {
                     element.id = element.id || label.getAttribute('for');
                     element.parentNode.insertBefore(label, element);
                 } else {
-                    // Use placeholder as aria-label
+                    // Use placeholder as aria-label // 使用占位符作为ARIA标签
                     if (element.placeholder) {
                         element.setAttribute('aria-label', element.placeholder);
                     }
@@ -941,7 +941,7 @@ class AccessibilityRemediator {
                 const foreground = styles.color;
                 const background = this.getBackgroundColor(element);
                 
-                // Apply high contrast fixes
+                // Apply high contrast fixes // 应用高对比度修复
                 element.style.setProperty('color', 'var(--high-contrast-text, #000)', 'important');
                 element.style.setProperty('background-color', 'var(--high-contrast-bg, #fff)', 'important');
             }
@@ -949,7 +949,7 @@ class AccessibilityRemediator {
     }
     
     generateAltText(img) {
-        // Use various strategies to generate alt text
+        // Use various strategies to generate alt text // 使用各种策略生成替代文本
         const strategies = [
             () => img.title,
             () => img.getAttribute('data-alt'),
@@ -969,10 +969,10 @@ class AccessibilityRemediator {
     }
 }
 
-// React accessibility components
+// React accessibility components // React可访问性组件
 import React from 'react';
 
-// Accessible button component
+// Accessible button component // 可访问的按钮组件
 const AccessibleButton = ({ 
     children, 
     onClick, 
@@ -995,7 +995,7 @@ const AccessibleButton = ({
     );
 };
 
-// Live region for announcements
+// Live region for announcements // 用于播报的动态区域
 const LiveRegion = ({ message, politeness = 'polite' }) => {
     return (
         <div
@@ -1009,7 +1009,7 @@ const LiveRegion = ({ message, politeness = 'polite' }) => {
     );
 };
 
-// Skip navigation component
+// Skip navigation component // 跳过导航组件
 const SkipNav = () => {
     return (
         <a href="#main-content" className="skip-nav">
@@ -1019,14 +1019,14 @@ const SkipNav = () => {
 };
 ```
 
-### 7. CI/CD Integration
+### 7. CI/CD Integration # 7. CI/CD集成
 
-Integrate accessibility testing into pipelines:
+Integrate accessibility testing into pipelines: # 将可访问性测试集成到流水线中：
 
-**CI/CD Accessibility Pipeline**
+**CI/CD Accessibility Pipeline** # CI/CD可访问性流水线
 ```yaml
 # .github/workflows/accessibility.yml
-name: Accessibility Tests
+name: Accessibility Tests # 可访问性测试
 
 on: [push, pull_request]
 
@@ -1037,38 +1037,38 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     
-    - name: Setup Node.js
+    - name: Setup Node.js # 设置Node.js
       uses: actions/setup-node@v3
       with:
         node-version: '18'
     
-    - name: Install dependencies
+    - name: Install dependencies # 安装依赖
       run: npm ci
     
-    - name: Build application
+    - name: Build application # 构建应用
       run: npm run build
     
-    - name: Start server
+    - name: Start server # 启动服务器
       run: |
         npm start &
         npx wait-on http://localhost:3000
     
-    - name: Run axe accessibility tests
+    - name: Run axe accessibility tests # 运行axe可访问性测试
       run: npm run test:a11y
     
-    - name: Run pa11y tests
+    - name: Run pa11y tests # 运行pa11y测试
       run: |
         npx pa11y http://localhost:3000 \
           --reporter cli \
           --standard WCAG2AA \
           --threshold 0
     
-    - name: Run Lighthouse CI
+    - name: Run Lighthouse CI # 运行Lighthouse CI
       run: |
         npm install -g @lhci/cli
         lhci autorun --config=lighthouserc.json
     
-    - name: Upload accessibility report
+    - name: Upload accessibility report # 上传可访问性报告
       uses: actions/upload-artifact@v3
       if: always()
       with:
@@ -1078,30 +1078,30 @@ jobs:
           lighthouse-report.html
 ```
 
-**Pre-commit Hook**
+**Pre-commit Hook** # 提交前钩子
 ```bash
 #!/bin/bash
 # .husky/pre-commit
 
-# Run accessibility tests on changed components
+# Run accessibility tests on changed components # 对变更的组件运行可访问性测试
 CHANGED_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(jsx?|tsx?)$')
 
 if [ -n "$CHANGED_FILES" ]; then
-    echo "Running accessibility tests on changed files..."
+    echo "Running accessibility tests on changed files..." # 对变更文件运行可访问性测试
     npm run test:a11y -- $CHANGED_FILES
     
     if [ $? -ne 0 ]; then
-        echo "❌ Accessibility tests failed. Please fix issues before committing."
+        echo "❌ Accessibility tests failed. Please fix issues before committing." # 可访问性测试失败，请在提交前修复问题
         exit 1
     fi
 fi
 ```
 
-### 8. Accessibility Reporting
+### 8. Accessibility Reporting # 8. 可访问性报告
 
-Generate comprehensive reports:
+Generate comprehensive reports: # 生成全面报告：
 
-**Report Generator**
+**Report Generator** # 报告生成器
 ```javascript
 // accessibility-report-generator.js
 class AccessibilityReportGenerator {
@@ -1111,9 +1111,9 @@ class AccessibilityReportGenerator {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Accessibility Audit Report</title>
+    <title>Accessibility Audit Report</title> <!-- 可访问性审计报告 -->
     <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
+        body { font-family: Arial, sans-serif; margin: 20px; } /* 页面基础样式 */
         .summary { background: #f0f0f0; padding: 20px; border-radius: 8px; }
         .score { font-size: 48px; font-weight: bold; }
         .score.good { color: #0f0; }
@@ -1128,17 +1128,17 @@ class AccessibilityReportGenerator {
     </style>
 </head>
 <body>
-    <h1>Accessibility Audit Report</h1>
-    <p>Generated: ${new Date().toLocaleString()}</p>
+    <h1>Accessibility Audit Report</h1> <!-- 可访问性审计报告 -->
+    <p>Generated: ${new Date().toLocaleString()}</p> <!-- 生成时间 -->
     
     <div class="summary">
-        <h2>Summary</h2>
+        <h2>Summary</h2> <!-- 摘要 -->
         <div class="score ${this.getScoreClass(auditResults.summary.score)}">
             Score: ${auditResults.summary.score}/100
         </div>
         <p>WCAG ${auditResults.summary.wcagCompliance} Compliance</p>
         
-        <h3>Violations by Impact</h3>
+        <h3>Violations by Impact</h3> <!-- 按影响分类的违规 -->
         <table>
             <tr>
                 <th>Impact</th>
@@ -1154,7 +1154,7 @@ class AccessibilityReportGenerator {
         </table>
     </div>
     
-    <h2>Detailed Violations</h2>
+    <h2>Detailed Violations</h2> <!-- 详细违规 -->
     ${auditResults.violations.map(violation => `
         <div class="violation ${violation.impact}">
             <h3>${violation.help}</h3>
@@ -1175,13 +1175,13 @@ class AccessibilityReportGenerator {
         </div>
     `).join('')}
     
-    <h2>Manual Testing Required</h2>
+    <h2>Manual Testing Required</h2> <!-- 需要手工测试 -->
     <ul>
-        <li>Test with screen readers (NVDA, JAWS, VoiceOver)</li>
-        <li>Test keyboard navigation thoroughly</li>
-        <li>Test with browser zoom at 200%</li>
-        <li>Test with Windows High Contrast mode</li>
-        <li>Review content for plain language</li>
+        <li>Test with screen readers (NVDA, JAWS, VoiceOver)</li> <!-- 使用屏幕阅读器测试 -->
+        <li>Test keyboard navigation thoroughly</li> <!-- 彻底测试键盘导航 -->
+        <li>Test with browser zoom at 200%</li> <!-- 在200%浏览器缩放下测试 -->
+        <li>Test with Windows High Contrast mode</li> <!-- 在Windows高对比度模式下测试 -->
+        <li>Review content for plain language</li> <!-- 检查内容是否使用简单语言 -->
     </ul>
 </body>
 </html>
@@ -1193,20 +1193,20 @@ class AccessibilityReportGenerator {
     generateJSONReport(auditResults) {
         return {
             metadata: {
-                timestamp: new Date().toISOString(),
-                url: auditResults.url,
-                wcagVersion: '2.1',
-                level: 'AA'
+                timestamp: new Date().toISOString(), // 时间戳
+                url: auditResults.url, // 测试URL
+                wcagVersion: '2.1', // WCAG版本
+                level: 'AA' // 合规级别
             },
             summary: auditResults.summary,
             violations: auditResults.violations.map(v => ({
-                id: v.id,
-                impact: v.impact,
-                help: v.help,
-                count: v.nodes.length,
+                id: v.id, // 违规ID
+                impact: v.impact, // 影响级别
+                help: v.help, // 帮助信息
+                count: v.nodes.length, // 问题元素数量
                 elements: v.nodes.map(n => ({
-                    target: n.target.join(' '),
-                    html: n.html
+                    target: n.target.join(' '), // 目标选择器
+                    html: n.html // HTML内容
                 }))
             })),
             passes: auditResults.passes,
@@ -1216,15 +1216,15 @@ class AccessibilityReportGenerator {
 }
 ```
 
-## Output Format
+## Output Format # 输出格式
 
-1. **Accessibility Score**: Overall compliance score with WCAG levels
-2. **Violation Report**: Detailed list of issues with severity and fixes
-3. **Test Results**: Automated and manual test outcomes
-4. **Remediation Guide**: Step-by-step fixes for each issue
-5. **Code Examples**: Accessible component implementations
-6. **Testing Scripts**: Reusable test suites for CI/CD
-7. **Checklist**: Manual testing checklist for QA
-8. **Progress Tracking**: Accessibility improvement metrics
+1. **Accessibility Score**: Overall compliance score with WCAG levels # 1. 可访问性评分：WCAG级别的整体合规性评分
+2. **Violation Report**: Detailed list of issues with severity and fixes # 2. 违规报告：包含严重程度和修复的详细问题列表
+3. **Test Results**: Automated and manual test outcomes # 3. 测试结果：自动化和手工测试结果
+4. **Remediation Guide**: Step-by-step fixes for each issue # 4. 修复指南：每个问题的逐步修复
+5. **Code Examples**: Accessible component implementations # 5. 代码示例：可访问的组件实现
+6. **Testing Scripts**: Reusable test suites for CI/CD # 6. 测试脚本：CI/CD的可重用测试套件
+7. **Checklist**: Manual testing checklist for QA # 7. 检查清单：QA的手工测试检查清单
+8. **Progress Tracking**: Accessibility improvement metrics # 8. 进度跟踪：可访问性改进指标
 
-Focus on creating inclusive experiences that work for all users, regardless of their abilities or assistive technologies.
+Focus on creating inclusive experiences that work for all users, regardless of their abilities or assistive technologies. # 专注于创建包容性体验，无论用户的能力或辅助技术如何，都能为所有用户提供服务。

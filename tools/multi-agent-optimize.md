@@ -1,11 +1,11 @@
-Optimize application stack using specialized optimization agents:
+Optimize application stack using specialized optimization agents: # 使用专业优化代理优化应用程序堆栈
 
-[Extended thinking: This tool coordinates database, performance, and frontend optimization agents to improve application performance holistically. Each agent focuses on their domain while ensuring optimizations work together.]
+[Extended thinking: This tool coordinates database, performance, and frontend optimization agents to improve application performance holistically. Each agent focuses on their domain while ensuring optimizations work together.] # [扩展思考：这个工具协调数据库、性能和前端优化代理，全面改善应用程序性能。每个代理专注于各自的领域，同时确保优化协同工作。]
 
-## Optimization Strategy
+## Optimization Strategy # 优化策略
 
-### 1. Database Optimization
-Use Task tool with subagent_type="database-optimizer" to:
+### 1. Database Optimization # 数据库优化
+Use Task tool with subagent_type="database-optimizer" to: # 使用带有subagent_type="database-optimizer"的Task工具：
 - Analyze query performance and execution plans
 - Optimize indexes and table structures
 - Implement caching strategies

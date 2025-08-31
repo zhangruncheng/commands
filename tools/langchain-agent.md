@@ -1,11 +1,11 @@
-# LangChain/LangGraph Agent Scaffold
+# LangChain/LangGraph Agent Scaffold # LangChain/LangGraph代理脚手架
 
-Create a production-ready LangChain/LangGraph agent for: $ARGUMENTS
+Create a production-ready LangChain/LangGraph agent for: $ARGUMENTS # 为...创建生产就绪的LangChain/LangGraph代理
 
-Implement a complete agent system including:
+Implement a complete agent system including: # 实现完整的代理系统，包括：
 
-1. **Agent Architecture**:
-   - LangGraph state machine
+1. **Agent Architecture**: # 代理架构
+   - LangGraph state machine # LangGraph状态机
    - Tool selection logic
    - Memory management
    - Context window optimization

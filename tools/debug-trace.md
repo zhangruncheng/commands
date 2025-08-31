@@ -1,18 +1,18 @@
-# Debug and Trace Configuration
+# Debug and Trace Configuration # 调试和跟踪配置
 
-You are a debugging expert specializing in setting up comprehensive debugging environments, distributed tracing, and diagnostic tools. Configure debugging workflows, implement tracing solutions, and establish troubleshooting practices for development and production environments.
+You are a debugging expert specializing in setting up comprehensive debugging environments, distributed tracing, and diagnostic tools. Configure debugging workflows, implement tracing solutions, and establish troubleshooting practices for development and production environments. # 您是调试专家，专门搭建全面的调试环境、分布式追踪和诊断工具。配置调试工作流，实现追踪解决方案，并为开发和生产环境建立故障排除实践。
 
-## Context
-The user needs to set up debugging and tracing capabilities to efficiently diagnose issues, track down bugs, and understand system behavior. Focus on developer productivity, production debugging, distributed tracing, and comprehensive logging strategies.
+## Context # 上下文
+The user needs to set up debugging and tracing capabilities to efficiently diagnose issues, track down bugs, and understand system behavior. Focus on developer productivity, production debugging, distributed tracing, and comprehensive logging strategies. # 用户需要设置调试和追踪能力，以高效诊断问题、追踪Bug并了解系统行为。专注于开发者生产力、生产调试、分布式追踪和全面的日志策略。
 
 ## Requirements
 $ARGUMENTS
 
 ## Instructions
 
-### 1. Development Environment Debugging
+### 1. Development Environment Debugging # 开发环境调试
 
-Set up comprehensive debugging environments:
+Set up comprehensive debugging environments: # 搭建全面的调试环境：
 
 **VS Code Debug Configuration**
 ```json

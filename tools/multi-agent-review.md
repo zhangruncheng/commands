@@ -1,8 +1,8 @@
-Perform comprehensive multi-agent code review with specialized reviewers:
+Perform comprehensive multi-agent code review with specialized reviewers: # 使用专业评审员执行全面的多代理代码审查
 
-[Extended thinking: This tool command invokes multiple review-focused agents to provide different perspectives on code quality, security, and architecture. Each agent reviews independently, then findings are consolidated.]
+[Extended thinking: This tool command invokes multiple review-focused agents to provide different perspectives on code quality, security, and architecture. Each agent reviews independently, then findings are consolidated.] # [扩展思考：这个工具命令调用多个以评审为中心的代理，从代码质量、安全和架构等不同角度提供观点。每个代理独立评审，然后整合发现的问题。]
 
-## Review Process
+## Review Process # 评审流程
 
 ### 1. Code Quality Review
 Use Task tool with subagent_type="code-reviewer" to examine:
