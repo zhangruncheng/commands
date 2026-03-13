@@ -1,3 +1,7 @@
+---
+model: claude-opus-4-1
+---
+
 Complete Git workflow using specialized agents:
 
 1. code-reviewer: Review uncommitted changes

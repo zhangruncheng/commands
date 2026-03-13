@@ -1,3 +1,7 @@
+---
+model: claude-sonnet-4-0
+---
+
 # Data Pipeline Architecture
 
 Design and implement a scalable data pipeline for: $ARGUMENTS

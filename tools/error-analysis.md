@@ -1,3 +1,7 @@
+---
+model: claude-sonnet-4-0
+---
+
 # Error Analysis and Resolution
 
 Analyze and resolve errors in: $ARGUMENTS

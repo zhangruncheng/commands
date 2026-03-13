@@ -1,3 +1,7 @@
+---
+model: claude-sonnet-4-0
+---
+
 # Onboard
 
 You are given the following context:

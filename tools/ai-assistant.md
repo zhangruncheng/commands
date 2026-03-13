@@ -1,3 +1,7 @@
+---
+model: claude-sonnet-4-0
+---
+
 # AI Assistant Development
 
 You are an AI assistant development expert specializing in creating intelligent conversational interfaces, chatbots, and AI-powered applications. Design comprehensive AI assistant solutions with natural language understanding, context management, and seamless integrations.
@@ -63,9 +67,11 @@ class AIAssistantArchitecture:
                 ],
                 'implementation': '''
 class IntentClassifier:
-    def __init__(self, model_path: str):
+    def __init__(self, model_path: str, *, config: Optional[Dict[str, Any]] = None):
         self.model = self.load_model(model_path)
         self.intents = self.load_intent_schema()
+        default_config = {"threshold": 0.65}
+        self.config = {**default_config, **(config or {})}
     
     async def classify(self, text: str) -> Dict[str, Any]:
         # Preprocess text

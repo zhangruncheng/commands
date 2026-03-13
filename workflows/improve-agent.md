@@ -1,3 +1,7 @@
+---
+model: claude-opus-4-1
+---
+
 Improve an existing agent based on recent performance:
 
 1. Analyze recent uses of: $ARGUMENTS

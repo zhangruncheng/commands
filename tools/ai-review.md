@@ -1,3 +1,7 @@
+---
+model: claude-sonnet-4-0
+---
+
 # AI/ML Code Review
 
 Perform a specialized AI/ML code review for: $ARGUMENTS

@@ -1,3 +1,7 @@
+---
+model: claude-opus-4-1
+---
+
 Modernize legacy code using expert agents:
 
 1. legacy-modernizer: Analyze and plan modernization

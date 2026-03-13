@@ -1,3 +1,7 @@
+---
+model: claude-sonnet-4-0
+---
+
 Debug complex issues using specialized debugging agents:
 
 [Extended thinking: This tool command leverages the debugger agent with additional support from performance-engineer when performance issues are involved. It provides deep debugging capabilities with root cause analysis.]

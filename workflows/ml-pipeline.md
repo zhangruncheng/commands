@@ -1,3 +1,7 @@
+---
+model: claude-opus-4-1
+---
+
 # Machine Learning Pipeline
 
 Design and implement a complete ML pipeline for: $ARGUMENTS

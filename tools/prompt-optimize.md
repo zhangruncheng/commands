@@ -1,3 +1,7 @@
+---
+model: claude-sonnet-4-0
+---
+
 # AI Prompt Optimization
 
 Optimize the following prompt for better AI model performance: $ARGUMENTS

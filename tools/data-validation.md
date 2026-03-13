@@ -1,3 +1,7 @@
+---
+model: claude-sonnet-4-0
+---
+
 # Data Validation Pipeline
 
 Create a comprehensive data validation system for: $ARGUMENTS

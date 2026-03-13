@@ -1,3 +1,7 @@
+---
+model: claude-sonnet-4-0
+---
+
 Save current project context for future agent coordination:
 
 [Extended thinking: This tool uses the context-manager agent to capture and preserve project state, decisions, and patterns. This enables better continuity across sessions and improved agent coordination.]

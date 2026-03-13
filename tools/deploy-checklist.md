@@ -1,3 +1,7 @@
+---
+model: claude-sonnet-4-0
+---
+
 # Deployment Checklist and Configuration
 
 Generate deployment configuration and checklist for: $ARGUMENTS
